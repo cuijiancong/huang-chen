@@ -9,8 +9,8 @@ window.WEDDING_CONFIG = {
   couple: {
     groom: '黄先生',          // 新郎名字
     bride: '邓小姐',          // 新娘名字
-    groomNick: '小黄',            // 新郎昵称（可选，为空则用名字）
-    brideNick: '小邓'             // 新娘昵称（可选，为空则用名字）
+    groomNick: '',            // 新郎昵称（可选，为空则用名字）
+    brideNick: ''             // 新娘昵称（可选，为空则用名字）
   },
 
   // ========== 婚礼日期 ==========
@@ -142,5 +142,12 @@ window.WEDDING_CONFIG = {
       groom: 'assets/images/qrcode-groom.svg',  // 新郎收款码
       bride: 'assets/images/qrcode-bride.svg'    // 新娘收款码
     }
+  },
+
+  // ========== 微信分享卡片 ==========
+  // 图片必须是 JPG 或 PNG 格式，建议 300×300 以上，放在你部署的域名下
+  share: {
+    image: 'assets/images/share-cover.jpg',     // 分享卡片封面图
+    pageUrl: ''                                  // 部署后的完整 URL，留空自动取当前地址
   }
 };

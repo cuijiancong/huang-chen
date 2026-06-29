@@ -11,19 +11,33 @@
 
   // ========== 页面内容填充 ==========
   function populatePage() {
+    const n = C.couple;
+    const groomName = n.groomNick || n.groom;
+    const brideName = n.brideNick || n.bride;
+    const titleStr = `${groomName} & ${brideName} — ${C.pageTitle}`;
 
     // --- document title ---
-    document.title = (function () {
-      const n = C.couple;
-      const g = n.groomNick || n.groom;
-      const b = n.brideNick || n.bride;
-      return `${g} & ${b} — ${C.pageTitle}`;
-    })();
+    document.title = titleStr;
+
+    // --- 微信 / 社交网络分享卡片 OG 标签 ---
+    setMeta('og:title', titleStr);
+    setMeta('og:description', C.pages.cover.subtitle + '，' + C.pages.story.paragraphs[0]);
+    setMeta('og:url', C.share.pageUrl || window.location.href);
+
+    // 分享封面图：拼接完整 URL
+    const shareImg = C.share && C.share.image ? C.share.image : '';
+    const shareImgUrl = shareImg ? resolveUrl(shareImg) : '';
+    setMeta('og:image', shareImgUrl);
+
+    // 如果没有配置图片，尝试用照片墙第一张
+    if (!shareImgUrl && C.assets.galleryPhotos.length > 0) {
+      setMeta('og:image', resolveUrl(C.assets.galleryPhotos[0]));
+    }
 
     // --- 封面 ---
     setText('[data-key="cover.subtitle"]', C.pages.cover.subtitle);
-    setText('[data-key="cover.groom"]', C.couple.groomNick || C.couple.groom);
-    setText('[data-key="cover.bride"]', C.couple.brideNick || C.couple.bride);
+    setText('[data-key="cover.groom"]', groomName);
+    setText('[data-key="cover.bride"]', brideName);
     setText('[data-key="cover.date"]', C.weddingDate.display);
     setText('[data-key="cover.slogan"]', C.pages.cover.slogan);
     setText('[data-key="cover.scrollHint"]', C.pages.cover.scrollHint);
@@ -127,6 +141,18 @@
   function setText(selector, text) {
     const el = document.querySelector(selector);
     if (el) el.textContent = text;
+  }
+
+  function setMeta(property, content) {
+    const el = document.querySelector(`meta[property="${property}"]`);
+    if (el) el.setAttribute('content', content);
+  }
+
+  function resolveUrl(path) {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    const base = window.location.origin + window.location.pathname.replace(/[^/]+$/, '');
+    return base + path;
   }
 
   populatePage();
