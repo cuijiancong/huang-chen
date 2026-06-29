@@ -236,7 +236,7 @@
 
       <!-- 收款二维码 -->
       <div class="qrcode-section">
-        <p class="qrcode-hint">心意打赏，扫码即可</p>
+        <p class="qrcode-hint" data-key="thanks.qrcodeHint"></p>
         <div class="qrcode-cards">
           <div class="qrcode-card">
             <img id="qrcodeGroom" src="" alt="新郎收款码">
@@ -248,6 +248,13 @@
           </div>
         </div>
       </div>
+
+      <!-- 分享按钮 -->
+      <button class="share-btn" onclick="shareInvite()">
+        <span class="share-btn-icon"></span>
+        <span data-key="thanks.shareButton"></span>
+      </button>
+      <div class="share-toast" id="shareToast">链接已复制，去粘贴给朋友吧</div>
     </div>
     <div class="petals-container" id="petals7"></div>
   </section>

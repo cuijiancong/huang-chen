@@ -104,7 +104,9 @@ window.WEDDING_CONFIG = {
     // --- 感谢页 ---
     thanks: {
       title: '感谢您的见证',
-      text: '愿我们的幸福，也能温暖您的心'
+      text: '愿我们的幸福，也能温暖您的心',
+      qrcodeHint: '心意打赏，扫码即可',
+      shareButton: '分享给朋友'            // 分享按钮文案
     }
   },
 

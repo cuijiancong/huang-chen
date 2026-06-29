@@ -124,6 +124,8 @@
     setText('[data-key="thanks.names"]',
       `${C.couple.groomNick || C.couple.groom} & ${C.couple.brideNick || C.couple.bride}`);
     setText('[data-key="thanks.date"]', C.weddingDate.displayShort);
+    setText('[data-key="thanks.qrcodeHint"]', C.pages.thanks.qrcodeHint || '心意打赏，扫码即可');
+    setText('[data-key="thanks.shareButton"]', C.pages.thanks.shareButton || '分享给朋友');
 
     // 收款码
     const qrGroom = document.getElementById('qrcodeGroom');
@@ -473,6 +475,48 @@
   });
 
   initLightbox();
+
+  // ============ 分享邀请函 ============
+  window.shareInvite = function () {
+    const url = C.share.pageUrl || window.location.href;
+    const title = document.title;
+    const text = C.pages.cover.subtitle + '，' + C.pages.story.paragraphs[0];
+
+    // 优先用 Web Share API（手机浏览器原生分享面板）
+    if (navigator.share && /Mobi|Android/i.test(navigator.userAgent)) {
+      navigator.share({ title, text, url }).catch(() => {
+        copyAndToast(url);
+      });
+    } else {
+      // 桌面端/不支持时复制链接
+      copyAndToast(url);
+    }
+  };
+
+  function copyAndToast(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(showToast);
+    } else {
+      // 降级方案
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast();
+    }
+  }
+
+  function showToast() {
+    const toast = document.getElementById('shareToast');
+    if (!toast) return;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 2000);
+  }
 
   // ============ 飘落花瓣 ============
   function spawnPetals(pageElement) {
