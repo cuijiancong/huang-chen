@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+  <defs>
+    <linearGradient id="bb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f1220"/>
+      <stop offset="100%" stop-color="#2a1628"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#bb)"/>
+  <text x="200" y="290" text-anchor="middle" fill="#e0c78a" font-family="serif" font-size="20" letter-spacing="4">新娘特写</text>
+  <text x="200" y="320" text-anchor="middle" fill="#9b8b7a" font-family="serif" font-size="12" letter-spacing="2">BRIDE PHOTO</text>
+  <path d="M80 400 Q200 370 320 400" fill="none" stroke="#e0c78a" stroke-width="0.6" opacity="0.4"/>
+</svg>
