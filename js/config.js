@@ -9,8 +9,8 @@ window.WEDDING_CONFIG = {
   couple: {
     groom: '黄先生',          // 新郎名字
     bride: '邓小姐',          // 新娘名字
-    groomNick: '',            // 新郎昵称（可选，为空则用名字）
-    brideNick: ''             // 新娘昵称（可选，为空则用名字）
+    groomNick: '小黄',            // 新郎昵称（可选，为空则用名字）
+    brideNick: '小邓'             // 新娘昵称（可选，为空则用名字）
   },
 
   // ========== 婚礼日期 ==========
