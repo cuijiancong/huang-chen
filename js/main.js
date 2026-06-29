@@ -382,13 +382,9 @@
     setGalleryActive(0);
 
     galleryItems.forEach((item, index) => {
+      // 单击直接打开灯箱（无延迟）
       item.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // 单击切换背景
-        setGalleryActive(index);
-      });
-      // 双击进灯箱
-      item.addEventListener('dblclick', (e) => {
+        e.preventDefault();
         e.stopPropagation();
         openLightbox(index);
       });
@@ -396,7 +392,6 @@
 
     // 自动轮播背景（每 3 秒换一张）
     setInterval(() => {
-      // 只在照片墙页面可见时轮播
       const galleryPage = document.getElementById('page5');
       if (!galleryPage || !galleryPage.classList.contains('active')) return;
       setGalleryActive((galleryActive + 1) % lightboxImages.length);
@@ -409,10 +404,6 @@
     // 更新背景图
     const bg = document.getElementById('galleryBg');
     if (bg) {
-      // 用双图切换实现淡入
-      bg.style.backgroundImage = bg.style.backgroundImage
-        ? `url(${lightboxImages[index]})`
-        : undefined;
       bg.style.backgroundImage = `url(${lightboxImages[index]})`;
       bg.classList.add('active');
     }
