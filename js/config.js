@@ -147,7 +147,7 @@ window.WEDDING_CONFIG = {
   // ========== 微信分享卡片 ==========
   // 图片必须是 JPG 或 PNG 格式，建议 300×300 以上，放在你部署的域名下
   share: {
-    image: 'assets/images/share-cover.png',     // 分享卡片封面图
+    image: 'assets/images/share-cover.jpg',     // 分享卡片封面图
     pageUrl: ''                                  // 部署后的完整 URL，留空自动取当前地址
   }
 };
