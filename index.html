@@ -21,8 +21,8 @@
 </head>
 <body>
 
-<!-- 背景音乐（src 由 config 注入） -->
-<audio id="bgMusic" loop preload="auto"></audio>
+<!-- 背景音乐：autoplay 直接播放，JS 兜底，按钮保底 -->
+<audio id="bgMusic" loop autoplay preload="auto"></audio>
 
 <!-- 音乐控制按钮 -->
 <button id="musicBtn" class="music-btn paused" onclick="toggleMusic()" aria-label="音乐播放/暂停">

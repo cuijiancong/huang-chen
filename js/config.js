@@ -35,10 +35,8 @@ window.WEDDING_CONFIG = {
 
   // ========== 酒店信息 ==========
   venue: {
-    name: 'XX大酒店 · 百合厅',        // 酒店名称+厅名
-    address: 'XX市XX区XX路88号',     // 详细地址
-    lat: 39.9042,              // 纬度（用于地图导航）
-    lng: 116.4074              // 经度（用于地图导航）
+    name: '黄氏宗祠',        // 酒店名称+厅名
+    address: '佛山市南海区狮山镇南海科技工业园松夏工业园区',     // 详细地址（直接用于地图导航）
   },
 
   // ========== 仪式时间安排 ==========
@@ -74,7 +72,7 @@ window.WEDDING_CONFIG = {
       title: '新郎',                     // 标题
       name: '黄先生',                    // 显示名字
       subtitle: '终于等到你',            // 副标题
-      description: '今天，我要娶你回家'   // 底部文案
+      description: '今天，我要嫁给你啦'   // 底部文案
     },
 
     // --- 新娘页 ---
@@ -82,7 +80,7 @@ window.WEDDING_CONFIG = {
       title: '新娘',
       name: '邓小姐',
       subtitle: '往后余生都是你',
-      description: '今天，我要嫁给你啦'
+      description: '今天，我要娶你回家'
     },
 
     // --- 照片墙 ---
@@ -105,7 +103,7 @@ window.WEDDING_CONFIG = {
     thanks: {
       title: '感谢您的见证',
       text: '愿我们的幸福，也能温暖您的心',
-      qrcodeHint: '心意打赏，扫码即可',
+      qrcodeHint: '承蒙厚爱，扫码添彩，您给的每一分都是我们未来的糖。',
       shareButton: '分享给朋友'            // 分享按钮文案
     }
   },

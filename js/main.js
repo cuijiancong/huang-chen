@@ -108,10 +108,13 @@
     setText('[data-key="info.locationAddr"]', C.venue.address);
     setText('[data-key="info.mapHint"]', C.pages.info.mapHint);
 
-    // 地图预览静态图
+    // 地图预览 — 直接用 fallback（不需要经纬度）
     const mapImg = document.getElementById('mapPreviewImg');
-    if (mapImg && C.venue.lat) {
-      mapImg.src = `https://restapi.amap.com/v3/staticmap?zoom=15&size=680*320&markers=mid,0xFF0000,📍:${C.venue.lng},${C.venue.lat}&key=YOUR_AMAP_KEY`;
+    if (mapImg) {
+      // 直接触发 fallback 展示
+      mapImg.style.display = 'none';
+      const fallback = mapImg.nextElementSibling;
+      if (fallback) fallback.style.display = 'flex';
     }
 
     // 倒计时标签（婚前/婚后动态切换，初始设为婚前文案）
@@ -339,19 +342,23 @@
     }
   };
 
-  // ============ 地图导航（从 CONFIG 读取） ============
+  // ============ 地图导航（直接用地址搜索） ============
   window.openMap = function () {
-    const { lat, lng, name, address } = C.venue;
+    const { name, address } = C.venue;
+    const query = encodeURIComponent(name + ' ' + address);
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
     const isAndroid = /Android/i.test(navigator.userAgent);
 
     let url;
     if (isIOS) {
-      url = `http://maps.apple.com/?q=${encodeURIComponent(name + ' ' + address)}&ll=${lat},${lng}`;
+      // Apple Maps — 直接用地址搜索
+      url = `http://maps.apple.com/?q=${query}`;
     } else if (isAndroid) {
-      url = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}&callnative=1`;
+      // 高德地图 — 用地址搜索
+      url = `https://uri.amap.com/search?keyword=${query}&callnative=1`;
     } else {
-      url = `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}`;
+      // PC — 高德 Web 版搜索
+      url = `https://uri.amap.com/search?keyword=${query}`;
     }
     window.open(url, '_blank');
   };
