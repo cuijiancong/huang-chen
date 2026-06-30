@@ -24,34 +24,28 @@
     setMeta('og:description', C.pages.cover.subtitle + '，' + C.pages.story.paragraphs[0]);
     setMeta('og:url', C.share.pageUrl || window.location.href);
 
-    // 分享封面图：拼接完整 URL
-    const shareImg = C.share && C.share.image ? C.share.image : '';
-    const shareImgUrl = shareImg ? resolveUrl(shareImg) : '';
-    setMeta('og:image', shareImgUrl);
-    // 微信朋友圈同样需要 itemprop="image"
-    const itemImg = document.getElementById('itempropImage');
-    if (itemImg) itemImg.setAttribute('content', shareImgUrl);
-
-    // 如果没有配置图片，尝试用照片墙第一张
-    if (!shareImgUrl && C.assets.galleryPhotos.length > 0) {
-      setMeta('og:image', resolveUrl(C.assets.galleryPhotos[0]));
+    // 聊天卡片封面图：JS 动态设置（聊天爬虫会执行 JS）
+    const chatImg = C.share && C.share.chatCardImage ? C.share.chatCardImage : '';
+    const chatImgUrl = chatImg ? resolveUrl(chatImg) : '';
+    if (chatImgUrl) {
+      setMeta('og:image', chatImgUrl);
     }
+    // 朋友圈爬虫不执行 JS，og:image 已静态写在 HTML 中指向 share-moments.jpg
 
     // 动态获取分享图实际尺寸，设置 og:image:width / og:image:height
-    // 微信朋友圈对尺寸校验严格，不匹配会降级为链接图标
-    const finalShareUrl = shareImgUrl || (C.assets.galleryPhotos.length > 0 ? resolveUrl(C.assets.galleryPhotos[0]) : '');
+    // （尺寸已静态写在 HTML 中，此处作为 JS 增强）
+    const finalShareUrl = chatImgUrl || (C.assets.galleryPhotos.length > 0 ? resolveUrl(C.assets.galleryPhotos[0]) : '');
     if (finalShareUrl) {
       const probeImg = new Image();
       probeImg.onload = function () {
-        const w = probeImg.naturalWidth || 600;
-        const h = probeImg.naturalHeight || 400;
+        const w = probeImg.naturalWidth || 750;
+        const h = probeImg.naturalHeight || 750;
         setOrCreateMeta('og:image:width', String(w));
         setOrCreateMeta('og:image:height', String(h));
       };
       probeImg.onerror = function () {
-        // 加载失败时使用默认尺寸 600×400（匹配 SVG viewBox）
-        setOrCreateMeta('og:image:width', '600');
-        setOrCreateMeta('og:image:height', '400');
+        setOrCreateMeta('og:image:width', '750');
+        setOrCreateMeta('og:image:height', '750');
       };
       probeImg.src = finalShareUrl;
     }

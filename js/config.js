@@ -145,9 +145,11 @@ window.WEDDING_CONFIG = {
   },
 
   // ========== 微信分享卡片 ==========
-  // 图片必须是 JPG 或 PNG 格式，建议 300×300 以上，放在你部署的域名下
+  // chatCardImage: 聊天窗口转发卡片（JS 动态设置，可使用相对路径）
+  // momentsImage:  朋友圈分享图（静态写在 HTML 中，朋友圈爬虫不执行 JS，必须写相对路径）
   share: {
-    image: 'assets/images/share-cover.jpg',     // 分享卡片封面图
-    pageUrl: ''                                  // 部署后的完整 URL，留空自动取当前地址
+    chatCardImage: 'assets/images/share-cover.jpg',   // 聊天卡片封面图
+    momentsImage: 'assets/images/share-moments.jpg',  // 朋友圈分享图
+    pageUrl: ''                                        // 部署后的完整 URL，留空自动取当前地址
   }
 };
