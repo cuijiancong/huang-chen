@@ -7,14 +7,30 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title id="pageTitle">婚宴邀请函</title>
 
-<!-- 微信 / QQ / 聊天转发卡片（og:image 等由 main.js 动态填充，JS 爬虫能看到） -->
-<!-- 微信朋友圈爬虫不执行 JS，必须静态设置 og:image，否则降级为 🔗 -->
+<!-- 朋友圈爬虫执行同步 inline 脚本：将相对路径转为绝对 URL -->
+<!-- 朋友圈和聊天爬虫都执行基本的同步 script，但朋友圈等不到异步加载 -->
+<script>
+(function(){
+  // 拼接绝对路径：location.origin + path + 相对文件路径
+  var base = location.origin + location.pathname.replace(/\/[^/]*$/, '/');
+  function abs(rel) { return base + rel; }
+  // 朋友圈分享图片（绝对 HTTPS URL）
+  var imgUrl = abs('assets/images/share-moments.jpg');
+  document.querySelector('meta[property="og:image"]').setAttribute('content', imgUrl);
+  document.getElementById('itempropImage').setAttribute('content', imgUrl);
+  // 标题 & 描述（朋友圈爬虫无法读取外部 config.js，直接内联）
+  document.querySelector('meta[property="og:title"]').setAttribute('content', '黄先生 & 邓小姐 — 婚宴邀请函');
+  document.querySelector('meta[property="og:description"]').setAttribute('content', '诚挚邀请您见证，世间所有的相遇，都是久别重逢');
+  document.querySelector('meta[property="og:url"]').setAttribute('content', location.href);
+})();
+</script>
+<!-- 微信聊天转发卡片（main.js 异步执行后覆盖上述值） -->
 <meta property="og:title" content="" id="ogTitle">
 <meta property="og:description" content="" id="ogDesc">
 <meta property="og:image" content="assets/images/share-moments.jpg" id="ogImage">
 <meta property="og:url" content="" id="ogUrl">
 <meta property="og:type" content="website">
-<!-- 微信朋友圈对图片尺寸校验严格，必须静态写在 HTML 中 -->
+<!-- 微信朋友圈图片尺寸，静态设定 -->
 <meta property="og:image:width" content="750">
 <meta property="og:image:height" content="750">
 <meta itemprop="image" content="assets/images/share-moments.jpg" id="itempropImage">
