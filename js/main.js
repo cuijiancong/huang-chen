@@ -28,10 +28,32 @@
     const shareImg = C.share && C.share.image ? C.share.image : '';
     const shareImgUrl = shareImg ? resolveUrl(shareImg) : '';
     setMeta('og:image', shareImgUrl);
+    // 微信朋友圈同样需要 itemprop="image"
+    const itemImg = document.getElementById('itempropImage');
+    if (itemImg) itemImg.setAttribute('content', shareImgUrl);
 
     // 如果没有配置图片，尝试用照片墙第一张
     if (!shareImgUrl && C.assets.galleryPhotos.length > 0) {
       setMeta('og:image', resolveUrl(C.assets.galleryPhotos[0]));
+    }
+
+    // 动态获取分享图实际尺寸，设置 og:image:width / og:image:height
+    // 微信朋友圈对尺寸校验严格，不匹配会降级为链接图标
+    const finalShareUrl = shareImgUrl || (C.assets.galleryPhotos.length > 0 ? resolveUrl(C.assets.galleryPhotos[0]) : '');
+    if (finalShareUrl) {
+      const probeImg = new Image();
+      probeImg.onload = function () {
+        const w = probeImg.naturalWidth || 600;
+        const h = probeImg.naturalHeight || 400;
+        setOrCreateMeta('og:image:width', String(w));
+        setOrCreateMeta('og:image:height', String(h));
+      };
+      probeImg.onerror = function () {
+        // 加载失败时使用默认尺寸 600×400（匹配 SVG viewBox）
+        setOrCreateMeta('og:image:width', '600');
+        setOrCreateMeta('og:image:height', '400');
+      };
+      probeImg.src = finalShareUrl;
     }
 
     // --- 封面 ---
@@ -151,6 +173,16 @@
   function setMeta(property, content) {
     const el = document.querySelector(`meta[property="${property}"]`);
     if (el) el.setAttribute('content', content);
+  }
+
+  function setOrCreateMeta(property, content) {
+    let el = document.querySelector(`meta[property="${property}"]`);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute('property', property);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
   }
 
   function resolveUrl(path) {
