@@ -148,8 +148,8 @@ window.WEDDING_CONFIG = {
   // chatCardImage: 聊天窗口转发卡片（JS 动态设置，可使用相对路径）
   // momentsImage:  朋友圈分享图（静态写在 HTML 中，朋友圈爬虫不执行 JS，必须写相对路径）
   share: {
-    chatCardImage: 'assets/images/share-cover.jpg',   // 聊天卡片封面图
-    momentsImage: 'assets/images/share-moments.jpg',  // 朋友圈分享图
+    chatCardImage: 'assets/images/share-cover.jpg',   // 聊天卡片封面图 750x750
+    momentsImage: 'assets/images/share-moments.jpg',  // 朋友圈分享图 750x750
     pageUrl: ''                                        // 部署后的完整 URL，留空自动取当前地址
   }
 };
